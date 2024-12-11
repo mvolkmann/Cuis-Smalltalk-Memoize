@@ -33,3 +33,8 @@ fibonacci
         ifFalse: [(n - 1) fibonacci + (n - 2) fibonacci]]
     
 ```
+
+To clear all cached values, evaluate `Object clearMemo: prefix`
+where `prefix` is the name of class containing memoized methods.
+For example, to clear the memoized `fibonacci` results,
+evaluate `Object clearMemo: 'SmallInteger'`.

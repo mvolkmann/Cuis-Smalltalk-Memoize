@@ -1,21 +1,13 @@
-'From Cuis7.1 [latest update: #6883] on 10 December 2024 at 6:42:23 pm'!
+'From Cuis7.1 [latest update: #6883] on 10 December 2024 at 6:49:21 pm'!
 'Description '!
-!provides: 'Memoize' 1 1!
+!provides: 'Memoize' 1 2!
 
 
 
-!Object methodsFor: '*Memoize' stamp: 'RMV 12/8/2024 17:07:47'!
+!Object methodsFor: '*Memoize' stamp: 'RMV 12/10/2024 18:48:45'!
 memoize: aBlock
 	"Cache the result of evaluating a method with specific arguments.
 	This intended for use in class methods that only use their arguments.
-	For example, here is a memoized class method that
-	returns a String containing a number of spaces.
-	
-	indentDepth: aNumber
-	^ self memoize: [
-		String new: aNumber * 4 withAll: Character space.
-	]
-
 	To clear the cache for all methods in a given class, send
 	Object clearMemo: 'SomeClassName'
 	"
@@ -31,6 +23,17 @@ memoize: aBlock
 	valueKey := thisContext name, sender arguments asString :: asSymbol.
 
 	^ cache at: valueKey ifAbsentPut: [ aBlock value ].! !
+
+!Object class methodsFor: '*Memoize' stamp: 'RMV 12/6/2024 06:12:34'!
+clearMemo: aString
+	"Delete all memoized entries from Smalltalk Dictionary whose keys
+	begin with 'memo-' followed by a given string."
+	| prefix |
+	
+	prefix := 'memo-', aString.
+	Smalltalk keys do: [ :key |
+		key isSymbol and: [key asString beginsWith: prefix] :: ifTrue: [ Smalltalk removeKey: key ].
+	].! !
 
 !String class methodsFor: '*Memoize' stamp: 'RMV 12/10/2024 18:41:21'!
 indentDepth: aNumber
