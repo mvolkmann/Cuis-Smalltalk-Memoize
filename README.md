@@ -1,4 +1,4 @@
-# Memoize
+# Cuis-Smalltalk-Memoize
 
 This is a package for Cuis Smalltalk that provides methods for memoizing methods,
 which caches results of computation so repeating them can be avoided.
